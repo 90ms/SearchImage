@@ -1,11 +1,29 @@
 package com.a90ms.searchimage
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import com.a90ms.searchimage.base.BaseActivity
+import com.a90ms.searchimage.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        setupBinding()
+    }
+
+    private fun setupBinding() {
+        with(binding) {
+            vm = viewModel
+
+            tv.setOnClickListener {
+                viewModel.fetchImageList()
+            }
+        }
     }
 }

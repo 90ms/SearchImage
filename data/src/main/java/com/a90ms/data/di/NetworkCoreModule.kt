@@ -7,7 +7,10 @@ import android.os.Looper
 import android.widget.Toast
 import com.a90ms.common.ext.quit
 import com.a90ms.data.BuildConfig
-import com.a90ms.data.api.*
+import com.a90ms.data.api.DEFAULT_TIME_OUT
+import com.a90ms.data.api.HOST_NAVER
+import com.a90ms.data.api.HOST_URL
+import com.a90ms.data.api.NetworkConnectionInterceptor
 import com.a90ms.data.api.ResponseCode.ERROR_429
 import com.a90ms.data.api.ResponseCode.ERROR_SE01
 import com.a90ms.data.api.ResponseCode.ERROR_SE02
@@ -16,6 +19,8 @@ import com.a90ms.data.api.ResponseCode.ERROR_SE04
 import com.a90ms.data.api.ResponseCode.ERROR_SE05
 import com.a90ms.data.api.ResponseCode.ERROR_SE06
 import com.a90ms.data.api.ResponseCode.ERROR_SE99
+import com.a90ms.data.api.SYNC_INTERVAL
+import com.a90ms.data.api.ServerInspectionResponse
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -27,15 +32,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
+import javax.inject.Named
+import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

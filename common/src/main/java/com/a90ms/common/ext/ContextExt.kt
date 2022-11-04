@@ -12,3 +12,9 @@ fun Context.quit() {
         exitProcess(0)
     }
 }
+
+fun Context?.isValidContext(): Boolean = when (this) {
+    null -> false
+    is Activity -> (isDestroyed || isFinishing).not()
+    else -> true
+}

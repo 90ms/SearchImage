@@ -9,6 +9,7 @@ interface NaverService {
     @GET("v1/search/image")
     suspend fun getImageList(
         @Query(QUERY) query: String,
+        @Query(START) start: Int
     ): ResponseEntity
 
     companion object {
@@ -22,7 +23,7 @@ interface NaverService {
         /**
          * default = 1, max = 100
          * */
-        const val start = "start"
+        const val START = "start"
 
         /**
          * sim, date

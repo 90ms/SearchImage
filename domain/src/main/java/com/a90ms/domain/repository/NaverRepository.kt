@@ -1,10 +1,10 @@
 package com.a90ms.domain.repository
 
-import com.a90ms.common.dto.CommonDto
-import com.a90ms.domain.data.dto.ResponseDto
+import com.a90ms.domain.data.dto.ItemDto
 
 interface NaverRepository {
     suspend fun getImageList(
-        query: String
-    ): CommonDto<ResponseDto>
+        query: String,
+        start: Int
+    ): List<ItemDto>
 }

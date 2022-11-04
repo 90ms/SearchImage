@@ -70,6 +70,7 @@ dependencies {
     retrofitComponent()
     okHttpComponent()
 
+    implementation(AndroidX.PAGING)
     implementation(Google.MATERIAL)
     implementation(Others.GLIDE)
     annotationProcessor(Others.GLIDE_COMPILER)

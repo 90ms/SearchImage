@@ -7,8 +7,8 @@ import com.a90ms.domain.repository.NaverRepository
 class NaverRepositoryImpl(
     private val service: NaverService
 ) : NaverRepository {
-    override suspend fun getImageList(query: String, start: Int) =
-        service.getImageList(query, start).run {
+    override suspend fun getImageList(query: String, display: Int, start: Int) =
+        service.getImageList(query, display, start).run {
             this.items.map(ItemEntity::toDto)
         }
 }

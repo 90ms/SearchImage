@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.a90ms.common.ext.textChangesToFlow
 import com.a90ms.domain.data.dto.ItemDto
 import com.a90ms.searchimage.BR
 import com.a90ms.searchimage.R
@@ -12,6 +13,10 @@ import com.a90ms.searchimage.base.BaseActivity
 import com.a90ms.searchimage.base.BaseViewPagingAdapter
 import com.a90ms.searchimage.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -32,8 +37,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         with(binding) {
             vm = viewModel
 
-            tv.setOnClickListener {
-                viewModel.fetchImageList()
+            lifecycleScope.launch {
+                tieSearch.textChangesToFlow().debounce(1000).filter {
+                    val text = tieSearch.text.toString()
+                    text.isNotEmpty() && text != viewModel.nowQuery()
+                }.onEach {
+                    viewModel.fetchImageList(tieSearch.text.toString())
+                }.launchIn(this)
             }
         }
     }
@@ -84,7 +94,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         scrollToPosition(0)
                     },
                     isListEmpty = {
-                        // TODO 빈 화면 처리
+                        viewModel.updateEmptyInfo(it)
                     }
                 )
             }

@@ -21,14 +21,13 @@ class ImagePagingSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ItemDto> {
         val page = params.key ?: 1
         return try {
-            val start = if (page == 1) 1 else (page * PAGING_COUNT) + 1
-
-            val dto = naverRepository.getImageList(query, start)
+            val start = if (page == 1) 1 else ((page - 1) * PAGING_COUNT) + 1
+            val dto = naverRepository.getImageList(query, PAGING_COUNT, start)
             val nextPage = page + 1
             LoadResult.Page(
                 data = dto,
                 prevKey = null,
-                nextKey = if (dto.size < (PAGING_COUNT * page)) null else nextPage
+                nextKey = if (dto.size < PAGING_COUNT) null else nextPage
             )
         } catch (e: Exception) {
             LoadResult.Error(e)

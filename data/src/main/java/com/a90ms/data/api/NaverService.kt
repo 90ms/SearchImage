@@ -9,6 +9,7 @@ interface NaverService {
     @GET("v1/search/image")
     suspend fun getImageList(
         @Query(QUERY) query: String,
+        @Query(DISPLAY) display: Int,
         @Query(START) start: Int
     ): ResponseEntity
 
@@ -26,13 +27,13 @@ interface NaverService {
         const val START = "start"
 
         /**
-         * sim, date
+         * default = sim, date
          * */
-        const val sort = "sort"
+        const val SORT = "sort"
 
         /**
-         * all, large, medium, small
+         * default = all, large, medium, small
          * */
-        const val filter = "filter"
+        const val FILTER = "filter"
     }
 }

@@ -20,9 +20,15 @@ class MainViewModel @Inject constructor(
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState> get() = _state
 
-    fun fetchImageList() {
+    private val _emptyInfo = MutableLiveData(Pair(true, "검색어를 통해 조회 해보세요."))
+    val emptyInfo: LiveData<Pair<Boolean, String>> get() = _emptyInfo
+
+    private val nowQuery = MutableLiveData("")
+
+    fun fetchImageList(query: String) {
         viewModelScope.launch {
-            getImageListUseCase("비이지").successOr(null).let {
+            nowQuery.value = query
+            getImageListUseCase(query).successOr(null).let {
                 it?.map { pagingData ->
                     pagingData
                 }?.cachedIn(viewModelScope)?.collect { vo ->
@@ -31,4 +37,10 @@ class MainViewModel @Inject constructor(
             }
         }
     }
+
+    fun updateEmptyInfo(visible: Boolean) {
+        _emptyInfo.value = Pair(visible, "검색 결과가 없습니다.")
+    }
+
+    fun nowQuery() = nowQuery.value ?: ""
 }

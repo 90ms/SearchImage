@@ -1,6 +1,8 @@
 package com.a90ms.searchimage.base
 
+import android.view.View
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.a90ms.common.ext.isValidContext
 import com.bumptech.glide.Glide
@@ -14,4 +16,9 @@ fun ImageView.bindImage(
             .load(url)
             .into(this)
     }
+}
+
+@BindingAdapter("bindVisible")
+fun View.bindVisible(show: Boolean?) {
+    isVisible = show ?: false
 }

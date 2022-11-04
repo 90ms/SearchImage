@@ -1,0 +1,23 @@
+package com.a90ms.data.di
+
+import com.a90ms.data.api.HOST_NAVER
+import com.a90ms.data.api.NaverService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import javax.inject.Named
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object NetworkServiceModule {
+
+    @Singleton
+    @Provides
+    fun provideNaverService(
+        @Named(HOST_NAVER)
+        retrofitBuilder: Retrofit.Builder
+    ): NaverService = retrofitBuilder.build().create(NaverService::class.java)
+}

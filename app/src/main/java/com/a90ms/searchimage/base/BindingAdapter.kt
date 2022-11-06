@@ -10,7 +10,7 @@ import com.a90ms.common.utils.OnSingleClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-@BindingAdapter("bindImage","bindPlaceHolder")
+@BindingAdapter("bindImage", "bindPlaceHolder")
 fun ImageView.bindImage(
     url: String?,
     placeHolder: Drawable? = null

@@ -2,10 +2,13 @@ package com.a90ms.searchimage.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.a90ms.common.ext.textChangesToFlow
+import com.a90ms.common.utils.RecyclerViewDividerDecoration
 import com.a90ms.domain.data.dto.ItemDto
 import com.a90ms.searchimage.BR
 import com.a90ms.searchimage.R
@@ -45,6 +48,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     viewModel.fetchImageList(tieSearch.text.toString())
                 }.launchIn(this)
             }
+
+            fbTop.setOnClickListener {
+                binding.rvImage.smoothScrollToPosition(0)
+            }
         }
     }
 
@@ -78,6 +85,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             if (animator is SimpleItemAnimator) {
                 animator.supportsChangeAnimations = false
             }
+
+            addItemDecoration(RecyclerViewDividerDecoration(padding = 0f))
+
+            addOnScrollListener(
+                object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        binding.fbTop.isVisible = recyclerView.canScrollVertically(-1)
+                    }
+                }
+            )
 
             this@MainActivity.adapter = BaseViewPagingAdapter(
                 layoutResourceId = R.layout.item_image,

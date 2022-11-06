@@ -20,9 +20,11 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_photo"
             bindImage="@{item.thumbnail}"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            bindPlaceHolder="@{@drawable/ic_default_photo}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="center"
+            android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

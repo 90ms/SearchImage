@@ -133,7 +133,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 setupSourceLoadStateListener(
                     scope = lifecycleScope,
                     isLoading = {
-                        // TODO 로딩 처리
+                        loadingState(it)
                     },
                     scrollTop = {
                         scrollToPosition(0)

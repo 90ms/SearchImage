@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
-class RecyclerViewDividerDecoration: RecyclerView.ItemDecoration {
+class RecyclerViewDividerDecoration : RecyclerView.ItemDecoration {
 
     private var verticalSpace: Int = 0
     private var horizontalSpace: Int = 0

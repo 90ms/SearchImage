@@ -9,9 +9,9 @@ import com.a90ms.domain.data.dto.ItemDto
 import com.a90ms.domain.usecase.GetImageListUseCase
 import com.a90ms.searchimage.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(

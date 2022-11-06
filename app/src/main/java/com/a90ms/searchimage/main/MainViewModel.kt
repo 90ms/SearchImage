@@ -9,9 +9,9 @@ import com.a90ms.domain.data.dto.ItemDto
 import com.a90ms.domain.usecase.GetImageListUseCase
 import com.a90ms.searchimage.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -43,9 +43,9 @@ class MainViewModel @Inject constructor(
         _emptyInfo.value = Pair(visible, "검색 결과가 없습니다.")
     }
 
-    fun nowQuery() = nowQuery.value ?: ""
-
     fun onClickItem(item: ItemDto) {
         _state.value = MainState.OnClickItem(item)
     }
+
+    fun nowQuery() = nowQuery.value ?: ""
 }

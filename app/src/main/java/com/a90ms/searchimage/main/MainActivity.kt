@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.recyclerview.widget.*
 import com.a90ms.common.ext.openBrowser
+import com.a90ms.common.ext.px
 import com.a90ms.common.ext.textChangesToFlow
 import com.a90ms.common.utils.RecyclerViewDividerDecoration
 import com.a90ms.domain.data.dto.ItemDto
@@ -28,6 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val viewModel by viewModels<MainViewModel>()
     private lateinit var adapter: BaseViewPagingAdapter<ItemDto>
+    private var decoration = RecyclerViewDividerDecoration(1.px)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +52,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
             fbTop.setOnClickListener {
                 binding.rvImage.scrollToPosition(0)
+            }
+            fbLayoutManager.setOnClickListener {
+                rvImage.removeItemDecoration(decoration)
+                when (rvImage.layoutManager) {
+                    is LinearLayoutManager -> {
+                        rvImage.layoutManager =
+                            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                        decoration = RecyclerViewDividerDecoration(1.px, 1.px)
+                        fbLayoutManager.setImageResource(R.drawable.ic_layoutmanager_stagger)
+                    }
+                    is StaggeredGridLayoutManager -> {
+                        rvImage.layoutManager = LinearLayoutManager(this@MainActivity)
+                        decoration = RecyclerViewDividerDecoration(1.px)
+                        fbLayoutManager.setImageResource(R.drawable.ic_layoutmanager_linear)
+                    }
+                }
+                rvImage.addItemDecoration(decoration)
             }
         }
     }
@@ -90,7 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 animator.supportsChangeAnimations = false
             }
 
-            addItemDecoration(RecyclerViewDividerDecoration(padding = 0f))
+            addItemDecoration(RecyclerViewDividerDecoration(1.px))
 
             addOnScrollListener(
                 object : RecyclerView.OnScrollListener() {

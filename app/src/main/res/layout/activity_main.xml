@@ -85,11 +85,25 @@
             android:contentDescription="@string/description_floating_top"
             android:elevation="5dp"
             android:src="@drawable/arrow_up"
-            android:visibility="gone"
+            android:visibility="invisible"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fb_layout_manager"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fb_layout_manager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:background="@drawable/sr_floating_button"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/description_layout_manager"
             app:borderWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="visible" />
+            app:srcCompat="@drawable/ic_layoutmanager_linear" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,38 +1,75 @@
 package com.a90ms.common.utils
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import androidx.annotation.ColorInt
+import android.graphics.Rect
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.a90ms.common.ext.px
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
-open class RecyclerViewDividerDecoration(
-    private val height: Float = 1f,
-    protected open val padding: Float = 16f,
-    @ColorInt private val color: Int = Color.parseColor("#000000"),
-    private val startPosition: Int = 0
-) : RecyclerView.ItemDecoration() {
+class RecyclerViewDividerDecoration: RecyclerView.ItemDecoration {
 
-    private val paint = Paint()
+    private var verticalSpace: Int = 0
+    private var horizontalSpace: Int = 0
 
-    init {
-        paint.color = color
+    /**
+     * for LinearLayoutManager
+     * */
+    constructor(space: Int) : this(space, space)
+
+    /**
+     * for StaggeredGridLayoutManager
+     */
+    constructor(verticalSpace: Int, horizontalSpace: Int) : super() {
+        this.verticalSpace = verticalSpace
+        this.horizontalSpace = horizontalSpace
     }
 
-    override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        val height = this.height.px
-        val padding = this.padding.px
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        when (val layoutManager = parent.layoutManager) {
+            is StaggeredGridLayoutManager -> {
+                val spanCount = layoutManager.spanCount
+                val position = layoutManager.getPosition(view)
+                val column = position % spanCount
 
-        val left = parent.paddingStart + padding
-        val right = parent.width - parent.paddingEnd - padding
-        for (i in 0 until parent.childCount - 1) {
-            val child = parent.getChildAt(i)
-            if (parent.getChildAdapterPosition(child) < startPosition) continue
-            val params = child.layoutParams as RecyclerView.LayoutParams
-            val top = (child.bottom + params.bottomMargin).toFloat()
-            val bottom = top + height
-            c.drawRect(left, top, right, bottom, paint)
+                outRect.left = column * horizontalSpace / spanCount
+                outRect.right = horizontalSpace - (column + 1) * horizontalSpace / spanCount
+
+                if (position >= spanCount) {
+                    outRect.top += verticalSpace
+                }
+            }
+            is LinearLayoutManager -> {
+                when (layoutManager.orientation) {
+                    RecyclerView.HORIZONTAL -> {
+                        outRect.left += calculateSpaceByLocation(
+                            layoutManager,
+                            view,
+                            horizontalSpace
+                        )
+                    }
+                    RecyclerView.VERTICAL -> {
+                        outRect.bottom += calculateSpaceByLocation(
+                            layoutManager,
+                            view,
+                            verticalSpace
+                        )
+                    }
+                }
+            }
         }
+    }
+
+    private fun calculateSpaceByLocation(
+        layoutManager: LinearLayoutManager,
+        view: View,
+        space: Int
+    ): Int {
+        val isLast = layoutManager.getPosition(view) == layoutManager.itemCount - 1
+        return if (isLast) 0 else space
     }
 }

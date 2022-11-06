@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.a90ms.common.ext.openBrowser
 import com.a90ms.common.ext.textChangesToFlow
 import com.a90ms.common.utils.RecyclerViewDividerDecoration
 import com.a90ms.domain.data.dto.ItemDto
@@ -50,7 +51,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
 
             fbTop.setOnClickListener {
-                binding.rvImage.smoothScrollToPosition(0)
+                binding.rvImage.scrollToPosition(0)
             }
         }
     }
@@ -62,6 +63,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     lifecycleScope.launch {
                         adapter.submitData(it.pagingData)
                     }
+                }
+                is MainState.OnClickItem -> {
+                    openBrowser(it.item.link)
                 }
             }
         }

@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.a90ms.common.ext.isValidContext
+import com.a90ms.common.utils.OnSingleClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -17,7 +18,7 @@ fun ImageView.bindImage(
     if (context.isValidContext()) {
         Glide.with(context)
             .load(url)
-            .apply(RequestOptions().error(placeHolder).placeholder(placeHolder).centerCrop())
+            .apply(RequestOptions().error(placeHolder).placeholder(placeHolder))
             .into(this)
     }
 }
@@ -25,4 +26,11 @@ fun ImageView.bindImage(
 @BindingAdapter("bindVisible")
 fun View.bindVisible(show: Boolean?) {
     isVisible = show ?: false
+}
+
+@BindingAdapter("bindSingleClick")
+fun View.bindSingleClick(clickListener: View.OnClickListener?) {
+    clickListener?.also {
+        setOnClickListener(OnSingleClickListener(it))
+    } ?: setOnClickListener(null)
 }

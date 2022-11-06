@@ -5,4 +5,5 @@ import com.a90ms.domain.data.dto.ItemDto
 
 sealed class MainState {
     data class OnUpdateList(val pagingData: PagingData<ItemDto>) : MainState()
+    data class OnClickItem(val item: ItemDto) : MainState()
 }

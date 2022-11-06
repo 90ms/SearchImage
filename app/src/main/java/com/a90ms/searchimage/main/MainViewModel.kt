@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.a90ms.domain.base.successOr
+import com.a90ms.domain.data.dto.ItemDto
 import com.a90ms.domain.usecase.GetImageListUseCase
 import com.a90ms.searchimage.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,4 +44,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun nowQuery() = nowQuery.value ?: ""
+
+    fun onClickItem(item: ItemDto) {
+        _state.value = MainState.OnClickItem(item)
+    }
 }

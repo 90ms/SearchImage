@@ -59,10 +59,6 @@ abstract class BaseActivity<VDB : ViewDataBinding>(
         loadingDialog?.dismiss()
     }
 
-    fun isLoadingState(isShow: Boolean) {
-        loadingState(isShow)
-    }
-
     override fun loadingState(isShow: Boolean) {
         if (isShow) showLoading() else hideLoading()
     }

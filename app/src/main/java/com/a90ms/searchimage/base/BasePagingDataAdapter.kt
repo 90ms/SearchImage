@@ -17,11 +17,6 @@ abstract class BasePagingDataAdapter<ITEM : Any, VH : RecyclerView.ViewHolder>(
 
     private var previousLoading: Boolean? = null
 
-    /**
-     * @param isLoading : 새로고침 로딩 상태
-     * @param isListEmpty : 현재 리스트 사이즈가 0인지 확인
-     * @param isError : 데이터 로드 에러
-     */
     fun setupSourceLoadStateListener(
         scope: CoroutineScope,
         isLoading: ((Boolean) -> Unit)? = null,

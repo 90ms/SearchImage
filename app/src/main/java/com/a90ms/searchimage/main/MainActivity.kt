@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.a90ms.common.ext.openBrowser
 import com.a90ms.common.ext.px
@@ -26,6 +25,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @FlowPreview
 @AndroidEntryPoint
@@ -108,11 +108,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 ) = oldItem == newItem
             }
 
-            val animator = itemAnimator
-            if (animator is SimpleItemAnimator) {
-                animator.supportsChangeAnimations = false
-            }
-
             addItemDecoration(RecyclerViewDividerDecoration(1.px))
 
             addOnScrollListener(
@@ -140,6 +135,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     },
                     isListEmpty = {
                         viewModel.updateEmptyInfo(it)
+                    },
+                    isError = {
+                        Timber.e(it)
                     }
                 )
             }

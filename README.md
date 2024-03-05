@@ -108,26 +108,26 @@
   
   ```
 
-#### `on[명사][동사]()`
-- publisher가 이벤트만 전달하고 listener가 전적인 책임을 처리할 때
-- 이벤트를 handle하는 주체가 listen하고 있는 곳일때
-```kotlin
-fun onClick()
-fun onFocusChange()
-fun onScrollChange()
-fun onAnimationStart()
-fun onTextChange()
-```
+- on[명사][동사]()
+  - publisher가 이벤트만 전달하고 listener가 전적인 책임을 처리할 때
+  - 이벤트를 handle하는 주체가 listen하고 있는 곳일때
+    ```kotlin
+    fun onClick()
+    fun onFocusChange()
+    fun onScrollChange()
+    fun onAnimationStart()
+    fun onTextChange()
+  ```
 
-#### `on[명사][동사 과거형]()`
-- publisher가 무언가를 처리하고 listener에게 알려줄 때
-- 어떤 동작을 하고나서 이 동작이 일어났음을 listener에게 알려줄때
-- onEach(), doOnXXX() 개념처럼 특정 이벤트를 intercept해서 쓸때
-- 동작을 한뒤에 listener를 호출해야 과거형의 이름과 걸맞음
-```kotlin
-fun onScrollStateChanged()
-fun onTextChanged()
-```
+- on[명사][동사 과거형]()
+  - publisher가 무언가를 처리하고 listener에게 알려줄 때
+  - 어떤 동작을 하고나서 이 동작이 일어났음을 listener에게 알려줄때
+  - onEach(), doOnXXX() 개념처럼 특정 이벤트를 intercept해서 쓸때
+  - 동작을 한뒤에 listener를 호출해야 과거형의 이름과 걸맞음
+    ```kotlin
+    fun onScrollStateChanged()
+    fun onTextChanged()
+    ```
 
 - 한 줄에 들어가는 when 분기는 중괄호를 사용하지 않는다.
 ```kotlin
